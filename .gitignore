@@ -1,0 +1,16 @@
+# Ambiente virtual
+.venv/
+venv/
+
+# Variáveis de ambiente
+.env
+
+# Arquivos de dados sensíveis
+cnes.csv
+
+# Cache Python
+__pycache__/
+*.pyc
+
+# Alembic cache (opcional)
+alembic/versions/__pycache__/
