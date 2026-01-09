@@ -10,5 +10,12 @@ class User(Base):
     id = Column(Integer, primary_key = True , autoincrement = True)
     name = Column(String)
     email = Column(String)
+    senha = Column(String)
     perfil = Column(Boolean)
 
+class loguin(Base):
+    __tablename__ = "loguin"
+
+    id = Column(Integer, primary_key = True , autoincrement = True)
+    email = Column(String)
+    senha = Column(String)
