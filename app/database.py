@@ -23,3 +23,4 @@ def pegar_sessao():
         yield db
     finally:
         db.close()
+
