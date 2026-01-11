@@ -1,3 +1,3 @@
-from app.models import user
+from app import models
 
-all = ["user"]
+all = ["models"]

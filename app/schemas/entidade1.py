@@ -1,10 +1,7 @@
-from typing import Annotated
 from pydantic import BaseModel , Field 
-from uuid import UUID
+from typing import Annotated
 
-class unidade_saude_schemas(BaseModel):
-
-    id: Annotated[int , UUID] |None = None
-    Cnes: Annotated[str , Field(7)]
-    tipo_unidade: Annotated[str , Field(100)]
-    veiculos_sus: Annotated[str , Field(100)]
+class unidade_saude(BaseModel):
+    Cnes: Annotated[int , Field(max_length = 7)]
+    tipo_unidade: str |None = None
+    veiculos_sus: Annotated[int , Field(max_length = 2)]
