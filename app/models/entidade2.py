@@ -1,37 +1,39 @@
 from sqlalchemy import create_engine , Column , String , Integer , Boolean , ForeignKey
-from sqlalchemy.orm import declarative_base
-from uuid import UUID
-from enum import Enum
-from pydantic import field_validator
+from sqlalchemy.orm import declarative_base , relationship
 from app.database import Base
 
 class Location(Base):
-    __tablename__ = "Lacalization"
+    __tablename__ = "location"
 
-    id = Column(Integer, primary_key = True ,  autoincrement = True)
-    cod_uf_municipio = Column(Integer)
-    regiao_saude = Column(String)
-    microregiao = Column(String)
+    id = Column(Integer, primary_key=True, autoincrement=True)
 
-    unidade_id = Column(Integer, ForeignKey("UNIDADE_SAUDE.id"))
+    cod_uf_municipio = Column(Integer, nullable=False)
+    regiao_saude = Column(String(100))
+    microregiao = Column(String(100))
+
+    unidade_id = Column(Integer , ForeignKey("unidade_saude.id", ondelete = "CASCADE"), nullable = False)
+    unidade = relationship("UnidadeSaude", back_populates="location")
 
 class Gestao(Base):
-    __tablename__ = "Gestao"
+    __tablename__ = "gestao"
 
-    id = Column(Integer, primary_key = True , autoincrement = True)
-    tipo_gestao = Column("tipo_gse", String)
-    esfera_admin = Column("esfer_adm", Boolean)
-    retencao = Column("retencao", String)
-    
-    unidade_id = Column(Integer, ForeignKey("UNIDADE_SAUDE.id"))
+    id = Column(Integer, primary_key=True, autoincrement=True)
 
-class leitos(Base):
-    __tablename__ = "Leitos"
+    tipo_gestao = Column(String(10))
+    esfera_admin = Column(String(10))
+    retencao = Column(String(10))
+    unidade_id = Column(Integer ,ForeignKey("unidade_saude.id", ondelete = "CASCADE") , nullable = False)
+    unidade = relationship("UnidadeSaude", back_populates="gestao")
 
-    id = Column(Integer, primary_key = True , autoincrement = True)
-    leitos_tipo_1 = Column(Integer)
-    leitos_tipo_2 = Column(Integer)
-    leito_tipo_3 = Column(Integer)
-    total_leitos = Column(Integer)
+class Leitos(Base):
+    __tablename__ = "leitos"
 
-    unidade_id = Column(Integer , ForeignKey("UNIDADE_SAUDE.id"))
+    id = Column(Integer, primary_key=True, autoincrement=True)
+
+    leitos_tipo_1 = Column(Integer, default=0)
+    leitos_tipo_2 = Column(Integer, default=0)
+    leitos_tipo_3 = Column(Integer, default=0)
+    total_leitos = Column(Integer, default=0)
+
+    unidade_id = Column(Integer , ForeignKey("unidade_saude.id" , ondelete = "CASCADE"), nullable = False)
+    unidade = relationship("UnidadeSaude", back_populates="leitos")

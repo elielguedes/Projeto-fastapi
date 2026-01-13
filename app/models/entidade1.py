@@ -1,12 +1,14 @@
-from sqlalchemy import create_engine , Column , String , Integer , Boolean
-from sqlalchemy.orm import declarative_base
-from uuid import UUID
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import relationship
 from app.database import Base
 
-class unidade_de_saude(Base):
-    __tablename__ = "UNIDADE_SAUDE"
+class UnidadeSaude(Base):
+    __tablename__ = "unidade_saude"
 
-    id = Column(Integer, primary_key = True , autoincrement = True)
-    Cnes = Column(Integer)
-    tipo_unidade = Column(String)
-    veiculos_sus = Column(String)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    cnes = Column(String(7), unique=True, index=True , nullable = False)
+    nome = Column(String(255))
+
+    location = relationship("Location", back_populates="unidade", uselist=False)
+    gestao = relationship("Gestao", back_populates="unidade", uselist=False)
+    leitos = relationship("Leitos", back_populates="unidade", uselist=False)
