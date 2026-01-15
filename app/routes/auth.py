@@ -42,21 +42,19 @@ async def loguin(user_schemas: loguinSchemas , session: Session = Depends(pegar_
     usuario = session.query(User).filter(User.email == user_schemas.email).first()
     if not usuario:
         raise HTTPException(status_code = 401 , detail = "Usuario não encontrado")
-    else:
-        access_token = criar_token(usuario.id)
-        refresh_token = criar_token(usuario.id)
-        return {
-            "access_token": access_token,
-            "refresh_token": refresh_token
-        }
+    access_token = criar_token(usuario.id)
+    refresh_token = criar_token(usuario.id)
+    return {
+        "access_token": access_token,
+        "refresh_token": refresh_token
+    }
 @auth.post("/loguin-form")
 async def loguin_form(dados_formulario: OAuth2PasswordRequestForm = Depends(), session: Session = Depends(pegar_sessao)):
     usuario = autenticar(dados_formulario.username , dados_formulario.password , session)
     if not usuario:
         raise HTTPException(status_code = 401 , detail = "Usuario não encontrado")
-    else:
-        access_token = criar_token(usuario.id)
-        return {"acess_token": access_token}
+    access_token = criar_token(usuario.id)
+    return {"access_token": access_token}
 
 @auth.get("/refresh")
 async def refresh(usuario: User = Depends(verificar_token)):

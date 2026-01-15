@@ -16,7 +16,7 @@ Base = declarative_base()
 
 SessionLocal = sessionmaker(autocommit = False , autoflush = False , bind = engine)
 
-#sesseo do meu banco de dadoa
+#sessao do meu banco de dadoa
 def pegar_sessao():
     try:
         db = SessionLocal()
