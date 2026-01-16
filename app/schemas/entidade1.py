@@ -1,12 +1,13 @@
-from pydantic import BaseModel , Field , field_validator
+from pydantic import BaseModel , Field , field_validator , ConfigDict
 from typing import Annotated
 from uuid import UUID
 
-class UnidadeSaude(BaseModel):
+class Unidade_Saude(BaseModel):
+    model_config = ConfigDict(from_attributes = True)
+
     id: int | None = None
-    cnes: str = Field(max_length=7)
-    tipo_unidade: str | None = None
-    veiculos_sus: int = Field(ge=0, le=99)
+    cnes: str
+    nome: str
 
     @field_validator("cnes")
     @classmethod
