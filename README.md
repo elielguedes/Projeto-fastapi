@@ -146,7 +146,7 @@ erDiagram
     string email
     string role
   }
-
+```
 
 
 ## Origem dos Dados
@@ -155,6 +155,7 @@ erDiagram
 - Periodicidade: conforme atualização oficial
 
 ## Scripts de importação / exportação
+
 
 
 
