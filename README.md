@@ -99,6 +99,8 @@ app.db
 README.md
 requeriments.txt
 
+```
+
 ## 📊 Diagrama ER - Modelagem de Dados
 ```mermaid
 erDiagram
@@ -153,6 +155,7 @@ erDiagram
 - Periodicidade: conforme atualização oficial
 
 ## Scripts de importação / exportação
+
 
 
 
