@@ -102,47 +102,49 @@ requeriments.txt
 ## 📊 Diagrama ER - Modelagem de Dados
 ```mermaid
 erDiagram
-  %% == Entidades Principais ==
 
-  UnidadeSaude ||--o{ Unidade : "criar/gerenciar"
-  Usuario ||--o{ Usuarios : "criar/autenticar"
-  Location ||--o{ Location : "possui (N:N)"
-  Gestao ||--o{ Gestao : "possui (N:N)"
-  Leitos ||--o{ Leitos : "possui (N:N)"
+  UnidadeSaude ||--|| Location : possui
+  UnidadeSaude ||--|| Gestao : possui
+  UnidadeSaude ||--|| Leitos : possui
+  Usuario ||--o{ UnidadeSaude : gerencia
 
   UnidadeSaude {
-    id: UUID
-    cnes: int
-    nome: str
-    location: pk
-    gestao: pk
-    leitos: pk
+    UUID id PK
+    int cnes
+    string nome
   }
 
-Location {
-  id: UUID
-  cod_uf_municipio: int
-  regiao_saude: str
-  microregiao: str
-  unidade_id: pk
-  unidade: pk
-}
-Gestao {
-  id: UUID
-  tipo_gestao: str
-  esfera_admin: str
-  unidade_id: pk
-  unidade: pk
-}
-Leitos{
-  id: UUID
-  leitos_tipo_1: int
-  leitos_tipo_2: int
-  leitos_tipo_3: int
-  total_leitos: int
-  unidade_id: pk
-  unidade: pk
-}
+  Location {
+    UUID id PK
+    int cod_uf_municipio
+    string regiao_saude
+    string microregiao
+    UUID unidade_id FK
+  }
+
+  Gestao {
+    UUID id PK
+    string tipo_gestao
+    string esfera_admin
+    UUID unidade_id FK
+  }
+
+  Leitos {
+    UUID id PK
+    int leitos_tipo_1
+    int leitos_tipo_2
+    int leitos_tipo_3
+    int total_leitos
+    UUID unidade_id FK
+  }
+
+  Usuario {
+    UUID id PK
+    string username
+    string email
+    string role
+  }
+
 ```
 
 
@@ -152,6 +154,7 @@ Leitos{
 - Periodicidade: conforme atualização oficial
 
 ## Scripts de importação / exportação
+
 
 
 
