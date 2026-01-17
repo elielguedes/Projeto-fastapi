@@ -1,14 +1,14 @@
 from fastapi import APIRouter , Depends , HTTPException
 from app.core.config import pegar_sessao , verificar_token
 from app.models.entidade2 import Location , Gestao , Leitos
-from app.schemas.entidade2 import Gestao , leitos , LocationSchemas
+from app.schemas.entidade2 import leitos , LocationSchemas , GestaoSchemas
 from sqlalchemy.orm import Session
 
 entidade2 = APIRouter(prefix = "/entidade2" , tags=['entidade2'])
 
 
 @entidade2.get("/listar-location")
-def get_location(session: Session = Depends(pegar_sessao) , user = Depends(verificar_token)):
+async def get_location(session: Session = Depends(pegar_sessao) , user = Depends(verificar_token)):
     if not user:
         raise HTTPException(status_code = 400 , detail = "usuario não autenticado")
     locate = session.query(Location).all()
@@ -17,7 +17,7 @@ def get_location(session: Session = Depends(pegar_sessao) , user = Depends(verif
     }
 
 @entidade2.get("/")
-def get_cod_uf(cod_uf: int ,session: Session = Depends(pegar_sessao) , user = Depends(verificar_token)):
+async def get_cod_uf(cod_uf: int ,session: Session = Depends(pegar_sessao) , user = Depends(verificar_token)):
     cod = session.query(Location).filter(Location.cod_uf_municipio == cod_uf).first()
     if not user:
         raise HTTPException(status_code = 400 , detail = "Usuario não autenticado")
@@ -26,7 +26,7 @@ def get_cod_uf(cod_uf: int ,session: Session = Depends(pegar_sessao) , user = De
     return cod
     
 @entidade2.put("/entidade2/{id}")
-def update(id: str , data: LocationSchemas , session: Session = Depends(pegar_sessao) , user = Depends(verificar_token)):
+async def update(id: str , data: LocationSchemas , session: Session = Depends(pegar_sessao) , user = Depends(verificar_token)):
     cod = session.query(Location).filter(Location.id == id).first()
     if not user:
         raise HTTPException(status_code = 400 , detail = "User not autenticator")
@@ -38,7 +38,7 @@ def update(id: str , data: LocationSchemas , session: Session = Depends(pegar_se
     return cod
 
 @entidade2.delete("/entidade2/{id}")
-def delete(id: int , session: Session = Depends(pegar_sessao) , user = Depends(verificar_token)):
+async def delete(id: int , session: Session = Depends(pegar_sessao) , user = Depends(verificar_token)):
     if not user:
         raise HTTPException(status_code = 400 , detail = "User not autenticator")
     cod = session.query(Location).filter(Location.id == id).first()
@@ -48,3 +48,51 @@ def delete(id: int , session: Session = Depends(pegar_sessao) , user = Depends(v
     session.delete(cod)
     session.commit()
     return cod
+
+@entidade2.get("/gestao")
+async def get_gestao(session: Session = Depends(pegar_sessao) , user = Depends(verificar_token)):
+    if not user:
+        raise HTTPException(status_code = 400 , detail = "Usuario não autenticado")
+    gse = session.query(Gestao).all()
+    return gse
+
+@entidade2.get("/gestao/{id}")
+async def get_gestao_id(id: int , session: Session = Depends(pegar_sessao) , user = Depends(verificar_token)):
+    if not user:
+        raise HTTPException(status_code = 400 , detail = "User not autenticator")
+    gse_id = session.query(Gestao).filter(Gestao.id == id).first()
+    if not gse_id:
+        raise HTTPException(status_code = 400 , detail = "Cadastro não encontrado")
+    return gse_id
+
+@entidade2.get("/gestao")
+async def gse_tipo_gse(tipo_gse: str , session: Session = Depends(pegar_sessao) , user: Session = Depends(verificar_token)):
+    if not user:
+        raise HTTPException(status_code = 400 , detail = "User not autenticator")
+    gse_tipo_gse = session.query(Gestao).filter(Gestao.tipo_gestao == tipo_gse).first()
+    return {
+        "ges_tipo_ges": gse_tipo_gse
+    }
+
+@entidade2.put("/gestao")
+async def update_gse(id: int , data: GestaoSchemas , session: Session = Depends(pegar_sessao) , user: Session = Depends(verificar_token)):
+    update = session.query(Gestao).filter(Gestao.id == id).first()
+    if not user:
+        raise HTTPException(status_code = 400 , detail = "User not autenticator")
+    update.tipo_gestao = data.tipo_gestao
+    update.esfera_admin = data.esfera_admin
+    update.retencao = data.retencao
+    session.commit()
+    session.refresh(update)
+    return update
+
+@entidade2.delete("/Gestao/{id}")
+async def delete_gse(id: int , session: Session = Depends(pegar_sessao) , user: Session = Depends(verificar_token)):
+    if not user:
+        raise HTTPException(status_code = 400 , detail = "User not autenticator")
+    GseDelete = session.query(Gestao).filter(Gestao.id == id).first()
+    if not GseDelete:
+        raise HTTPException(status_code = 400 , detail = "Cadastro not encontrado")
+    session.delete(GseDelete)
+    session.commit()
+    return GseDelete

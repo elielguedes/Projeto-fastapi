@@ -7,15 +7,13 @@ class LocationSchemas(BaseModel):
     regiao_saude: int
     microregiao: int
 
-class Gestao(BaseModel):
-    id: UUID
+class GestaoSchemas(BaseModel):
     tipo_gestao: str
     esfera_admin: str
     retencao: str
     
 
 class leitos(BaseModel):
-    id: UUID
     leitos_tipo_1: int |None = None
     leitos_tipo_2: int |None = None
     leito_tipo_3: int |None = None
