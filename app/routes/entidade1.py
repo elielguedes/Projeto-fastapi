@@ -6,14 +6,14 @@ from app.database import pegar_sessao
 from app.core.config import verificar_token
 from app.services.entidade_saude import  create_unidade
 
-entidade1 = APIRouter()
+entidade1 = APIRouter(prefix="/unidade saude" , tags=['unidade saude'])
 
 
-@entidade1.post("/")
+@entidade1.post("/create")
 def create_uni(dados: Unidade_Saude , db: Session = Depends(pegar_sessao), usuario = Depends(verificar_token)):
     return create_unidade(db ,dados)
 
-@entidade1.put("/{cnes}", response_model = Unidade_Saude)
+@entidade1.put("/update/{cnes}", response_model = Unidade_Saude)
 def update_unidade(cnes: str , dados: Unidade_Saude , session: Session = Depends(pegar_sessao) , usuario = Depends(verificar_token)):
     unidade = session.query(UnidadeSaude).filter(UnidadeSaude.cnes == cnes).first()
     if not unidade:
@@ -34,7 +34,7 @@ def read_unidade(session: Session = Depends(pegar_sessao) , usuario = Depends(ve
             "Unidades": Unidades
         }
 
-@entidade1.delete("/{cnes}")
+@entidade1.delete("/delete/{cnes}")
 def delete_unidade(cnes: str , session: Session = Depends(pegar_sessao) , usuario = Depends(verificar_token)):
     unidade = session.query(UnidadeSaude).filter(UnidadeSaude.cnes == cnes).first()
     if not usuario:

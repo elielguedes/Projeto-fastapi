@@ -12,3 +12,9 @@ def create_unidade(db: Session , Unidade: Unidade_Saude):
     db.refresh(db_unidade)
     return db_unidade
 
+def update_unidade(db: Session , Unidade: Unidade_Saude):
+    if not Unidade.cnes:
+        raise HTTPException(status_code = 400 , detail = "CNES Ivalido")
+    db_unidade = UnidadeSaude(cnes = Unidade.cnes ,nome = Unidade.nome)
+    db.commit()
+    db.refresh(db_unidade)
