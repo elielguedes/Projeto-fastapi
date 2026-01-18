@@ -2,6 +2,7 @@ import os
 import csv
 from sqlalchemy import text
 from app.database import engine
+import uuid
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CSV_PATH = os.path.join(BASE_DIR, "csv", "CNES.csv")
@@ -11,8 +12,8 @@ print("📂 Lendo arquivo:", CSV_PATH)
 with open(CSV_PATH, encoding="latin-1", newline="") as f:
     reader = csv.DictReader(
         f,
-        delimiter=",",        # 👈 CORRETO
-        quotechar='"'         # 👈 IMPORTANTE
+        delimiter=",",        
+        quotechar='"'         
     )
 
     print("📌 Colunas reais:", reader.fieldnames[:5])  # debug rápido
@@ -21,10 +22,11 @@ with open(CSV_PATH, encoding="latin-1", newline="") as f:
         for row in reader:
             conn.execute(
                 text("""
-                    INSERT INTO unidade_saude (cnes, nome)
-                    VALUES (:cnes, :nome)
+                    INSERT INTO unidade_saude (id ,cnes, nome)
+                    VALUES (:id,:cnes, :nome)
                 """),
                 {
+                    "id": str(uuid.uuid4()),
                     "cnes": row["CNES"],
                     "nome": row.get("NO_FANTASIA") or row.get("NO_RAZAO_SOCIAL")
                 }

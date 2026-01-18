@@ -3,6 +3,7 @@ import csv
 from sqlalchemy import text
 from app.database import engine
 from pathlib import Path
+import uuid
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 CSV_PATH = BASE_DIR / "csv" / "cnes.csv"
@@ -27,17 +28,20 @@ with engine.begin() as conn:
 
             conn.execute(
                 text("""INSERT INTO location(
+                     id,
                      cod_uf_municipio,
                      regiao_saude,
                      microregiao,
                      unidade_id
                      )VALUES (
+                     :id,
                      :cod_uf,
                      :regiao,
                      :micro,
                      :unidade_id
                      )"""),
                      {
+                         "id": str(uuid.uuid4()),
                          "cod_uf": row["CODUFMUN"],
                          "regiao": row.get("REGIAO_SAUDE"),
                          "micro": row.get("MICROREGIAO"),

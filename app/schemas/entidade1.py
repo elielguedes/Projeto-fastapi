@@ -5,13 +5,12 @@ from uuid import UUID
 class Unidade_Saude(BaseModel):
     model_config = ConfigDict(from_attributes = True)
 
-    id: int | None = None
     cnes: str
     nome: str
 
     @field_validator("cnes")
     @classmethod
-    def validar_cnes(cls, v: str) -> str:
+    def validar_cnes(cls, v: int) -> int:
         if not v.isdigit():
             raise ValueError("CNES deve conter apenas números")
         if len(v) != 7:

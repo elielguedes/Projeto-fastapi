@@ -13,8 +13,8 @@ class GestaoSchemas(BaseModel):
     retencao: str
     
 
-class leitos(BaseModel):
+class leitosSchemas(BaseModel):
     leitos_tipo_1: int |None = None
     leitos_tipo_2: int |None = None
-    leito_tipo_3: int |None = None
+    leitos_tipo_3: int |None = None
     total_leitos: int |None = None

@@ -2,6 +2,7 @@ from sqlalchemy import text
 from app.database import engine 
 from pathlib import Path
 import csv
+import uuid
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 CSV_PATH = BASE_DIR / "csv" / "cnes.csv"
@@ -29,24 +30,31 @@ with engine.begin() as conn:
 
             conn.execute(text(
                 """INSERT INTO leitos (
+                 id,
                  leitos_tipo_1,
                  leitos_tipo_2,
                  leitos_tipo_3,
                  total_leitos,
                  unidade_id
                 )VALUES (
-                 :l1,
-                 :l2,
-                 :l3,
-                 :total,
+                 :id,
+                 :leitos_tipo_1,
+                 :leitos_tipo_2,
+                 :leitos_tipo_3,
+                 :total_leitos,
                  :unidade_id
                 ) 
                 """),
                 {
-                    "leitos_1": row["QTLEITP1"] or 0,
-                    "leitos_2": row["QTLEITP2"] or 0,
-                    "leitos_3": row["QTLEITP3"] or 0,
-                    "total": total,
+                    "id": str(uuid.uuid4()),
+                    "leitos_tipo_1": row["QTLEITP1"] or 0,
+                    "leitos_tipo_2": row["QTLEITP2"] or 0,
+                    "leitos_tipo_3": row["QTLEITP3"] or 0,
+                    "total_leitos": (
+                        int(row["QTLEITP1"] or 0)
+                        + int(row["QTLEITP2"] or 0)
+                        + int(row["QTLEITP3"] or 0)
+                    ),
                     "unidade_id": unidade.id
                 }
                 

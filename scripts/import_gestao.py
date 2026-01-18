@@ -2,6 +2,7 @@ from sqlalchemy import text
 from app.database import engine
 from pathlib import Path
 import csv
+import uuid
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 CSV_PATH = BASE_DIR / "csv" / "cnes.csv"
@@ -26,17 +27,20 @@ with engine.begin() as conn:
 
             conn.execute(
                 text("""INSERT INTO gestao(
+                     id,
                      tipo_gestao,
                      esfera_admin,
                      retencao,
                      unidade_id
                      )VALUES (
+                     :id,
                      :tp_gestao,
                      :admin,
                      :retencao,
                      :unidade_id
                      )"""),
                      {
+                         "id": str(uuid.uuid4()),
                          "tp_gestao": row["TPGESTAO"],
                          "admin": row.get("ESFERA_A"),
                          "retencao": row.get("RETENCAO"),

@@ -6,7 +6,7 @@ from app.database import pegar_sessao
 from app.core.config import verificar_token
 from app.services.entidade_saude import  create_unidade
 
-entidade1 = APIRouter(prefix="/unidade saude" , tags=['unidade saude'])
+entidade1 = APIRouter(prefix="/unidade-saude" , tags=['unidade-saude'])
 
 
 @entidade1.post("/create")
@@ -15,6 +15,8 @@ def create_uni(dados: Unidade_Saude , db: Session = Depends(pegar_sessao), usuar
 
 @entidade1.put("/update/{cnes}", response_model = Unidade_Saude)
 def update_unidade(cnes: str , dados: Unidade_Saude , session: Session = Depends(pegar_sessao) , usuario = Depends(verificar_token)):
+    if not usuario:
+        raise HTTPException(status_code = 400 , detail = "User not authticator")
     unidade = session.query(UnidadeSaude).filter(UnidadeSaude.cnes == cnes).first()
     if not unidade:
         raise HTTPException(status_code = 400 , detail = f"Unidade {cnes} não encontrada")
