@@ -1,20 +1,20 @@
 from fastapi import APIRouter , Depends , HTTPException
-from app.models.entidade1 import UnidadeSaude
-from app.schemas.entidade1 import Unidade_Saude
+from ..models.entidade1 import UnidadeSaude
+from ..schemas.entidade1 import UnidadeCreator
 from sqlalchemy.orm import Session
-from app.database import pegar_sessao
-from app.core.config import verificar_token
-from app.services.entidade_saude import  create_unidade
+from ..database import pegar_sessao
+from ..core.config import verificar_token
+from ..services.entidade_saude import  create_unidade
 
 entidade1 = APIRouter(prefix="/unidade-saude" , tags=['unidade-saude'])
 
 
 @entidade1.post("/create")
-def create_uni(dados: Unidade_Saude , db: Session = Depends(pegar_sessao), usuario = Depends(verificar_token)):
+def create_uni(dados: UnidadeCreator , db: Session = Depends(pegar_sessao), usuario = Depends(verificar_token)):
     return create_unidade(db ,dados)
 
-@entidade1.put("/update/{cnes}", response_model = Unidade_Saude)
-def update_unidade(cnes: str , dados: Unidade_Saude , session: Session = Depends(pegar_sessao) , usuario = Depends(verificar_token)):
+@entidade1.put("/update/{cnes}", response_model = UnidadeCreator)
+def update_unidade(cnes: str , dados: UnidadeCreator , session: Session = Depends(pegar_sessao) , usuario = Depends(verificar_token)):
     if not usuario:
         raise HTTPException(status_code = 400 , detail = "User not authticator")
     unidade = session.query(UnidadeSaude).filter(UnidadeSaude.cnes == cnes).first()

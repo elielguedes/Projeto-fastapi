@@ -1,7 +1,7 @@
 from fastapi import HTTPException
-from app.models import UnidadeSaude
+from ..models import UnidadeSaude
 from sqlalchemy.orm import Session
-from app.schemas.entidade1 import Unidade_Saude
+from ..schemas.entidade1 import Unidade_Saude
 
 def create_unidade(db: Session , Unidade: Unidade_Saude):
     if not Unidade.cnes:
@@ -17,4 +17,3 @@ def update_unidade(db: Session , Unidade: Unidade_Saude):
         raise HTTPException(status_code = 400 , detail = "CNES Ivalido")
     db_unidade = UnidadeSaude(cnes = Unidade.cnes ,nome = Unidade.nome)
     db.commit()
-    db.refresh(db_unidade)

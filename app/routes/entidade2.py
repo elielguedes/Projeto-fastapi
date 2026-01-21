@@ -1,7 +1,8 @@
 from fastapi import APIRouter , Depends , HTTPException
-from app.core.config import pegar_sessao , verificar_token
-from app.models.entidade2 import Location , Gestao , Leitos
-from app.schemas.entidade2 import leitosSchemas , LocationSchemas , GestaoSchemas
+from ..core.config import pegar_sessao , verificar_token
+from ..models.entidade2 import Location , Gestao , Leitos
+from ..schemas.entidade2 import LeitosCreate , LocationCreate , GestaoCreate
+from ..schemas.entidade2 import LeitosResponse , LocationResponse , GestaoResponse
 from sqlalchemy.orm import Session
 
 entidade2 = APIRouter(prefix = "/entidade2" , tags=['entidade2'])
@@ -16,7 +17,7 @@ async def get_location(session: Session = Depends(pegar_sessao) , user = Depends
         "locate": locate
     }
 
-@entidade2.get("/")
+@entidade2.get("/Location")
 async def get_cod_uf(cod_uf: int ,session: Session = Depends(pegar_sessao) , user = Depends(verificar_token)):
     cod = session.query(Location).filter(Location.cod_uf_municipio == cod_uf).first()
     if not user:
@@ -25,8 +26,8 @@ async def get_cod_uf(cod_uf: int ,session: Session = Depends(pegar_sessao) , use
     session.refresh(cod)
     return cod
     
-@entidade2.put("/entidade2/{id}")
-async def update(id: str , data: LocationSchemas , session: Session = Depends(pegar_sessao) , user = Depends(verificar_token)):
+@entidade2.put("/entidade2/{id}", response_model = LocationResponse)
+async def update(id: str , data: LocationCreate , session: Session = Depends(pegar_sessao) , user = Depends(verificar_token)):
     cod = session.query(Location).filter(Location.id == id).first()
     if not user:
         raise HTTPException(status_code = 400 , detail = "User not autenticator")
@@ -74,19 +75,21 @@ async def gse_tipo_gse(tipo_gse: str , session: Session = Depends(pegar_sessao) 
         "ges_tipo_ges": gse_tipo_gse
     }
 
-@entidade2.put("/gestao")
-async def update_gse(id: str , data: GestaoSchemas , session: Session = Depends(pegar_sessao) , user: Session = Depends(verificar_token)):
-    update = session.query(Gestao).filter(Gestao.id == id).first()
+@entidade2.put("/gestao_update", response_model = GestaoResponse)
+async def update_gse(id: str , data: GestaoCreate , session: Session = Depends(pegar_sessao) , user: Session = Depends(verificar_token)):
     if not user:
         raise HTTPException(status_code = 400 , detail = "User not autenticator")
+    update = session.query(Gestao).filter(Gestao.id == id).first()
+    if not update:
+        raise HTTPException(status_code = 400 , detail = f"Registro com id={id} não encontrado")
     update.tipo_gestao = data.tipo_gestao
     update.esfera_admin = data.esfera_admin
     update.retencao = data.retencao
+
     session.commit()
-    session.refresh(update)
     return update
 
-@entidade2.delete("/Gestao/{id}")
+@entidade2.delete("/Gestao_delete/{id}")
 async def delete_gse(id: str , session: Session = Depends(pegar_sessao) , user: Session = Depends(verificar_token)):
     if not user:
         raise HTTPException(status_code = 400 , detail = "User not autenticator")
@@ -115,8 +118,8 @@ async def get_leitos_id(id: str , session: Session = Depends(pegar_sessao) , use
         raise HTTPException(status_code = 400 , detail = "Cadastro não encontrado")
     return leitos
 
-@entidade2.put("/update")
-async def update_get_leitos(id: str , data: leitosSchemas , session: Session = Depends(pegar_sessao) , user = Depends(verificar_token)):
+@entidade2.put("/update_leitos", response_model = LocationResponse)
+async def update_get_leitos(id: str , data: LeitosCreate , session: Session = Depends(pegar_sessao) , user = Depends(verificar_token)):
     if not user:
         raise HTTPException(status_code = 400 , detail = "user not autheticator")
     leitos = session.query(Leitos).filter(Leitos.id == id).first()
@@ -128,7 +131,7 @@ async def update_get_leitos(id: str , data: leitosSchemas , session: Session = D
     session.refresh(leitos)
     return leitos
 
-@entidade2.delete("/delete/{id}")
+@entidade2.delete("/delete_leitos/{id}")
 async def delete_leitos(id: str , session: Session = Depends(pegar_sessao) , user = Depends(verificar_token)):
     if not user:
         raise HTTPException(status_code = 400 , detail = "User not autheticator")
