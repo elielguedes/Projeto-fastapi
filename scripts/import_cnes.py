@@ -20,6 +20,7 @@ with open(CSV_PATH, encoding="latin-1", newline="") as f:
 
     with engine.begin() as conn:
         for row in reader:
+            cnes = str(row["CNES"]).strip().zfill(7)
             conn.execute(
                 text("""
                     INSERT INTO unidade_saude (id ,cnes, nome)
@@ -27,7 +28,7 @@ with open(CSV_PATH, encoding="latin-1", newline="") as f:
                 """),
                 {
                     "id": str(uuid.uuid4()),
-                    "cnes": row["CNES"],
+                    "cnes": cnes,
                     "nome": row.get("NO_FANTASIA") or row.get("NO_RAZAO_SOCIAL")
                 }
             )
