@@ -1,10 +1,9 @@
-🏥 API RESTT - UNIDADE DE SAÚDE (CNES)
+🏥 API REST - UNIDADE DE SAÚDE (CNES)
 
 [![Python](https://img.shields.io/badge/Python-3.12+-blue.svg)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110.0-green.svg)](https://fastapi.tiangolo.com)
 [![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0+-orange.svg)](https://sqlalchemy.org)
 [![Status](https://img.shields.io/badge/Status-Produção-brightgreen.svg)](http://18.118.167.28:8000)
-
 
 📋 Descrição
 
@@ -154,6 +153,7 @@ erDiagram
 - Periodicidade: conforme atualização oficial
 
 ## Scripts de importação / exportação
+
 
 
 
