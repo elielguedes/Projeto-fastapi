@@ -1,3 +1,3 @@
 from app.core import config , security
 
-all = ["config" , "security"]
+__all__ = ["config" , "security"]
