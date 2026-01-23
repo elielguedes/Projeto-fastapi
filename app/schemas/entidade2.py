@@ -1,4 +1,4 @@
-from pydantic import BaseModel , Field , field_validator
+from pydantic import BaseModel , Field , field_validator , model_validator
 from typing import Annotated
 from uuid import UUID
 
@@ -8,14 +8,6 @@ class LocationSchemas(BaseModel):
     regiao_saude: int
     microregiao: int
 
-    @field_validator("cod_uf_municipio")
-    @classmethod
-    def validar_cod(cls , v: int) -> int:
-        if not v.isdigit():
-            raise ValueError("Código UF deve conter apenas números")
-        if len(v) != 6:
-            raise ValueError("Código UF deve conter somente 6 dígitos")
-        return v
 
 
 class LocationCreate(LocationSchemas):
@@ -43,7 +35,11 @@ class LeitosSchemas(BaseModel):
     leitos_tipo_3: int |None = None
     total_leitos: int |None = None
 
-
+    @model_validator(mode = "after")
+    def calcular_leitos(self):
+        self.total_leitos = (self.leitos_tipo_1 or 0) + (self.leitos_tipo_2 or 0) + (self.leitos_tipo_3 or 0)
+        return self
+        
 class LeitosCreate(LeitosSchemas):
     pass
 
