@@ -9,5 +9,5 @@ class loguinSchemas(BaseModel):
 class LoguinCreate(loguinSchemas):
     pass
 class LoguinResponse(BaseModel):
-    id: UUID
-    email: EmailStr
+    access_token: str
+    refresh_token: str

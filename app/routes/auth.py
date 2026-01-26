@@ -34,7 +34,10 @@ async def loguin_form(dados_formulario: OAuth2PasswordRequestForm = Depends(), s
     if not usuario:
         raise HTTPException(status_code = 401 , detail = "Usuario não encontrado")
     access_token = criar_token_service(usuario.id)
-    return {"access_token": access_token}
+    return {
+        "access_token": access_token,
+        "token_type": "bearer"
+        }
 
 @auth.get("/refresh")
 async def refresh(usuario: User = Depends(verificar_token)):

@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from ..models import UnidadeSaude
+from ..models.entidade1 import UnidadeSaude
 from sqlalchemy.orm import Session
 from ..schemas.entidade1 import UnidadeCreator
 
@@ -22,10 +22,10 @@ def update_unidade_service(cnes: str , session: Session , dados: UnidadeCreator)
     session.refresh(unidade)
     return unidade
 
-def delete_unidade_service(session: Session , cnes: str):
-    unidade = session.query(UnidadeSaude).filter(UnidadeSaude.cnes == cnes).first()
+def delete_unidade_service(cnes: str , db: Session):
+    unidade = db.query(UnidadeSaude).filter(UnidadeSaude.cnes == cnes).first()
     if not unidade:
         raise HTTPException(status_code = 400 , detail = "CNES não encontrado")
-    session.delete(unidade)
-    session.commit()
-    return unidade
+    db.delete(unidade)
+    db.commit()
+    return {"mensagem": "Unidade {cnes} removida com sucesso"}

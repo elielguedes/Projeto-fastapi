@@ -27,7 +27,7 @@ def update_id_lct(id: str , db: Session , data: LocationCreate):
 def delete_service_lct(id: str , db: Session):
     cod = db.query(Location).filter(Location.id == id).first()
     if not cod:
-        raise HTTPException(status_code = 400 , detail = "Registro não encontrado")
+        raise HTTPException(status_code = 404 , detail = "Registro não encontrado")
     
     db.delete(cod)
     db.commit()
@@ -48,7 +48,7 @@ def update_service_gse(id: str ,data: GestaoCreate , db: Session):
 def delete_service_gse(id: str , db: Session):
     GseDelete = db.query(Gestao).filter(Gestao.id == id).first()
     if not GseDelete:
-        raise HTTPException(status_code = 400 , detail = "Cadastro not encontrado")
+        raise HTTPException(status_code = 404 , detail = "Cadastro not encontrado")
     
     db.delete(GseDelete)
     db.commit()

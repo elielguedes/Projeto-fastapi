@@ -1,6 +1,6 @@
 from fastapi import APIRouter , Depends , HTTPException
 from ..models.entidade1 import UnidadeSaude
-from ..schemas.entidade1 import UnidadeCreator , UnidadeUpdate
+from ..schemas.entidade1 import UnidadeCreator , UnidadeUpdate , UnidadeResponse
 from sqlalchemy.orm import Session
 from ..database import pegar_sessao
 from ..core.config import verificar_token
@@ -34,5 +34,6 @@ def read_unidade(session: Session = Depends(pegar_sessao) , usuario = Depends(ve
 @entidade1.delete("/delete/{cnes}")
 def delete_unidade(cnes: str , session: Session = Depends(pegar_sessao) , usuario = Depends(verificar_token)):
     if not usuario:
-        raise HTTPException(status_code = 400 , detail = f"Unidade {cnes} não encontrado !")
-    return delete_unidade_service(session , cnes)
+        raise HTTPException(status_code = 400 , detail = "User not autheticator")
+    return delete_unidade_service(cnes , session)
+    
