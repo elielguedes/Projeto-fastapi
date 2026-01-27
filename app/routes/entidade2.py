@@ -8,7 +8,7 @@ from ..services.entidade_service import get_service_uf , update_id_lct , delete_
 
 entidade2 = APIRouter(prefix = "/entidade2" , tags=['entidade2'])
 
-
+# ===== Location =====
 @entidade2.get("/listar-location")
 async def get_location(session: Session = Depends(pegar_sessao) , user = Depends(verificar_token)):
     if not user:
@@ -35,7 +35,7 @@ async def delete(id: str , session: Session = Depends(pegar_sessao) , user = Dep
     if not user:
         raise HTTPException(status_code = 400 , detail = "User not autenticator")
     return delete_service_lct(id , session)
-
+# ===== Gestao =====
 @entidade2.get("/gestao")
 async def get_gestao(session: Session = Depends(pegar_sessao) , user = Depends(verificar_token)):
     if not user:
@@ -72,7 +72,7 @@ async def delete_gse(id: str , session: Session = Depends(pegar_sessao) , user: 
     if not user:
         raise HTTPException(status_code = 400 , detail = "User not autenticator")
     return delete_service_gse(id , session)
-
+# ===== Leitos =====
 @entidade2.get("/leitos")
 async def get_leitos(session: Session = Depends(pegar_sessao) , user = Depends(verificar_token)):
     if not user:

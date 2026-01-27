@@ -2,6 +2,7 @@ from app.database import pegar_sessao
 from app.main import app
 from tests.databasetests import SessionTests
 
+# ==== Pegar sessao do banco =====
 def override_pegar_sessao():
     db = SessionTests()
     try:

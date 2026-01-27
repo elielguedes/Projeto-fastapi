@@ -26,7 +26,7 @@ def setup():
 def clear_tables():
     with engine_test.begin() as conn:
         conn.execute(text("DELETE FROM unidade_saude"))
-
+# ===== Unidade =====
 def test_unidade_create():
     res = client.post("/unidade-saude/create" , json = {
         "cnes": "1234567",
