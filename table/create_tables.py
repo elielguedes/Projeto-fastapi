@@ -4,4 +4,4 @@ from app.models.entidade2 import Location, Gestao, Leitos
 from app.models.user import User
 
 Base.metadata.create_all(bind=engine)
-print("✅ Tabelas criadas")
+print(" Tabelas criadas")

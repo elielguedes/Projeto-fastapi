@@ -28,4 +28,4 @@ def delete_unidade_service(cnes: str , db: Session):
         raise HTTPException(status_code = 400 , detail = "CNES não encontrado")
     db.delete(unidade)
     db.commit()
-    return {"mensagem": "Unidade {cnes} removida com sucesso"}
+    return {"mensagem": f"Unidade {cnes} removida com sucesso"}

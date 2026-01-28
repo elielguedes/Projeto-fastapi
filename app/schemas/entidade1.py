@@ -26,4 +26,5 @@ class UnidadeResponse(Unidade_Saude):
     id: UUID
     cnes: str
 
-    model_config = ConfigDict(from_attributes = True)
+class MensagemRespose(BaseModel):
+    mensagem: str

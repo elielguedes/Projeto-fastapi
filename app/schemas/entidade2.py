@@ -1,4 +1,5 @@
 from pydantic import BaseModel , Field , field_validator , model_validator
+from ..models.entidade2 import Location
 from typing import Annotated
 from uuid import UUID
 
@@ -8,13 +9,14 @@ class LocationSchemas(BaseModel):
     regiao_saude: int
     microregiao: int
 
-
-
 class LocationCreate(LocationSchemas):
     pass
 
-class LocationResponse(LocationSchemas):
+class LocationResponse(BaseModel):
     id: UUID
+    cod_uf_municipio: int |None = None
+    regiao_saude: int |None = None
+    microregiao: int |None = None
 
 # --------Getão -------
 class GestaoSchemas(BaseModel):

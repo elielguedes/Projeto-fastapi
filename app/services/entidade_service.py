@@ -3,14 +3,12 @@ from sqlalchemy.orm import Session
 from ..models.entidade2 import Location , Gestao , Leitos
 from ..schemas.entidade2 import LocationCreate , GestaoCreate , LeitosCreate
 
+# ==== Location ====
 def get_service_uf(db: Session ,cod_uf: int):
     cod = db.query(Location).filter(Location.cod_uf_municipio == cod_uf).first()
     if not cod:
         raise HTTPException(status_code = 400 , detail = "Código UF não encontrado")
-    db.commit()
-    db.refresh(cod)
     return cod
-
 
 def update_id_lct(id: str , db: Session , data: LocationCreate):
     cod = db.query(Location).filter(Location.id == id).first()
@@ -33,7 +31,7 @@ def delete_service_lct(id: str , db: Session):
     db.commit()
     return cod
 
-
+# ==== Gestao ====
 def update_service_gse(id: str ,data: GestaoCreate , db: Session):
     update = db.query(Gestao).filter(Gestao.id == id).first()
     if not update:
@@ -54,6 +52,7 @@ def delete_service_gse(id: str , db: Session):
     db.commit()
     return GseDelete
 
+# ==== Leitos ====
 def put_service_leitos(id: str ,data: LeitosCreate , db: Session):
     leitos = db.query(Leitos).filter(Leitos.id == id).first()
     if not leitos:

@@ -7,7 +7,7 @@ import uuid
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CSV_PATH = os.path.join(BASE_DIR, "csv", "CNES.csv")
 
-print("📂 Lendo arquivo:", CSV_PATH)
+print(" Lendo arquivo:", CSV_PATH)
 
 with open(CSV_PATH, encoding="latin-1", newline="") as f:
     reader = csv.DictReader(
@@ -33,4 +33,4 @@ with open(CSV_PATH, encoding="latin-1", newline="") as f:
                 }
             )
 
-print("✅ Importação finalizada")
+print(" Importação finalizada")
