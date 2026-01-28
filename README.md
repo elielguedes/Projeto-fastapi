@@ -196,6 +196,8 @@ erDiagram
     |__ test_entidade2.py
     |__ test_user.py
 
+## Migração do banco de dados usando alembic 
+ -- Utilizado para fazer auterações do banco em produção com mais facilidade
 
 
 
