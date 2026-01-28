@@ -180,11 +180,11 @@ erDiagram
 
 ## Scripts de importação / exportação
     -- Importação dos dados em csv convertidados para o banco de dados
-  |-- __init__.py
-  |-- import_cnes.py
-  |-- import_gestao.py
-  |-- import_leitos.py
-  |-- import_location.py
+    |-- __init__.py
+    |-- import_cnes.py
+    |-- import_gestao.py
+    |-- import_leitos.py
+    |-- import_location.py
 
 ## Tests de integração 
     -- Testes de integração com conexão com banco de dados cache 
@@ -195,6 +195,7 @@ erDiagram
     |__ test_entidade1.py
     |__ test_entidade2.py
     |__ test_user.py
+
 
 
 
