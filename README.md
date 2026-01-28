@@ -92,6 +92,7 @@ python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
         |__ auth_service.py
         |__ entidade_saude.py
         |__ entidade_service.py
+      __init__.py
      💾database.py
     🚀main.py
 |__csv/
@@ -107,9 +108,19 @@ python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
   |__ import_location.py
 |__tables/
   |__ create_tables.py
+|__tests/
+    |__ __init__.py
+    |__ conftests.py
+    |__ test_entidade1.py
+    |__ test_entidade2.py
+    |__ test_user.py
+
 app.db
+alembic.ini
 README.md
+pytest.ini
 requeriments.txt
+tests.db
 
 ```
 
@@ -168,16 +179,23 @@ erDiagram
 - Periodicidade: conforme atualização oficial
 
 ## Scripts de importação / exportação
-<<<<<<< Updated upstream
+    -- Importação dos dados em csv convertidados para o banco de dados
+  |-- __init__.py
+  |-- import_cnes.py
+  |-- import_gestao.py
+  |-- import_leitos.py
+  |-- import_location.py
+
+## Tests de integração 
+    -- Testes de integração com conexão com banco de dados cache 
+    -- tests de authenticação e rotas 
+    |__ tests/
+    |__ __init__.py
+    |__ conftests.py
+    |__ test_entidade1.py
+    |__ test_entidade2.py
+    |__ test_user.py
 
 
 
 
-
-
-
-
-
-
-=======
->>>>>>> Stashed changes
