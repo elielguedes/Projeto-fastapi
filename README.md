@@ -214,6 +214,9 @@ erDiagram
 ## Backup do banco de dados
 -- Na patsa backup uma pasta que faz o backup do banco de dados para deixar mais profissional para produção
 
+## Dockerizado 
+-- Usando docker compesente com imagem , é dockerfile 
+-- Linux ubutu usando como maquina virtual
 
 
 
