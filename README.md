@@ -92,8 +92,12 @@ python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
         |__ auth_service.py
         |__ entidade_saude.py
         |__ entidade_service.py
+      __init__.py
      💾database.py
     🚀main.py
+|__backup/
+    |__ __init__.py
+    |__ backup.py
 |__csv/
   |__ cnes.csv
   |__ organization.py
@@ -107,9 +111,19 @@ python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
   |__ import_location.py
 |__tables/
   |__ create_tables.py
+|__tests/
+    |__ __init__.py
+    |__ conftests.py
+    |__ test_entidade1.py
+    |__ test_entidade2.py
+    |__ test_user.py
+
 app.db
+alembic.ini
 README.md
+pytest.ini
 requeriments.txt
+tests.db
 
 ```
 
@@ -168,16 +182,39 @@ erDiagram
 - Periodicidade: conforme atualização oficial
 
 ## Scripts de importação / exportação
-<<<<<<< Updated upstream
+    -- Importação dos dados em csv convertidados para o banco de dados
+    |-- __init__.py
+    |-- import_cnes.py
+    |-- import_gestao.py
+    |-- import_leitos.py
+    |-- import_location.py
+
+## Tests de integração 
+    -- Testes de integração com conexão com banco de dados cache 
+    -- tests de authenticação e rotas 
+    |__ tests/
+    |__ __init__.py
+    |__ conftests.py
+    |__ test_entidade1.py
+    |__ test_entidade2.py
+    |__ test_user.py
+
+## Migração do banco de dados usando alembic 
+ -- Utilizado para fazer auterações do banco em produção com mais facilidade
+
+## Sobre a arquitetura de camadas
+-- Foi ,  escolhida para ter booas práticas de desenvolvimento é para organização do projeto.
+-- Como , Apretação no caso schemas , regra de negocio no services , repositorios que são as rotas,
+-- o models o banco de dados e etc para ter tudo em conjunto funcionando para não embaraçar a lógica 
+-- é muito usadas para requisições HTTPS . Use se também para separar a regra de négocio e não ficar
+-- só no sql. Que garantem melhor perfomace , manuntenabilidade ,funcionamento muito comuns em apirest.
+-- já a desvantagens seria muitos arquivos , é complicações no começo do desenvolvimento com muitos códigos.
+-- Seria como se fosse dividir e conquistar isso é arq. em camadas
+
+## Backup do banco de dados
+-- Na patsa backup uma pasta que faz o backup do banco de dados para deixar mais profissional para produção
 
 
 
 
 
-
-
-
-
-
-=======
->>>>>>> Stashed changes
