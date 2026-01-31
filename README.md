@@ -70,6 +70,7 @@ python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
     |___core/
         |___ __init__.py
         |__ config.py
+        |__ logs.py
         |__ security.py
     |__models/
         |__ __init__.py
@@ -103,6 +104,8 @@ python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
   |__ organization.py
 |__docs/
   |__cronograma.md
+|__logs/
+  |__ app.logs
 |__scripts/
   |__ __init__.py
   |__ import_cnes.py
@@ -117,6 +120,7 @@ python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
     |__ test_entidade1.py
     |__ test_entidade2.py
     |__ test_user.py
+
 
 app.db
 alembic.ini
@@ -218,6 +222,9 @@ erDiagram
 -- Usando docker compesente com imagem , é dockerfile 
 -- Linux ubutu usando como maquina virtual
 
+## Logs 
+-- Usado para facilitar o entender o que está acontecendo no código 
+--Se , uma rota falhar ou se tiver bugs facilita para debung ou uma informção do que está acontecendo na rota
 
 
 
