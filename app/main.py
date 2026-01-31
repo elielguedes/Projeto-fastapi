@@ -8,3 +8,6 @@ app = FastAPI()
 app.include_router(auth)
 app.include_router(entidade1)
 app.include_router(entidade2)
+@app.get("/")
+def root():
+    return {"status": "ok"}

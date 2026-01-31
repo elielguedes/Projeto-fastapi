@@ -1,16 +1,20 @@
 FROM python:3.11-slim
 
-# ==== Evitar arquivos ==== 
+# ==== Evitar arquivos cache ====
 ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONBUFFERED=1
+ENV PYTHONUNBUFFERED=1
 
-# ==== Dependencias do sistema ====
+# ==== Diretório de trabalho ====
+WORKDIR /app
+
+# ==== Dependências do sistema ====
 RUN apt-get update && apt-get install -y build-essential
 
-COPY requirements.txt . 
-
+# ==== Dependências Python ====
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# ==== Código ====
 COPY . .
 
 EXPOSE 8000
