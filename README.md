@@ -41,7 +41,7 @@ python -m venv .venv
 
 # Windows PowerShell
 
-.\.venv\Scripts\Activate.ps1
+\.venv\Scripts\Activate.ps1
 
 # Linux/Mac
 
@@ -228,6 +228,7 @@ erDiagram
 ## Logs 
 -- Usado para facilitar o entender o que está acontecendo no código 
 --Se , uma rota falhar ou se tiver bugs facilita para debung ou uma informção do que está acontecendo na rota
+
 
 
 
