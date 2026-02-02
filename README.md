@@ -128,6 +128,9 @@ README.md
 pytest.ini
 requeriments.txt
 tests.db
+docker-compose.yml
+dockerfile
+requeriments.txt
 
 ```
 
@@ -225,6 +228,7 @@ erDiagram
 ## Logs 
 -- Usado para facilitar o entender o que está acontecendo no código 
 --Se , uma rota falhar ou se tiver bugs facilita para debung ou uma informção do que está acontecendo na rota
+
 
 
 
