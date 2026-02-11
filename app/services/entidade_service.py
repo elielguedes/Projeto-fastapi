@@ -2,7 +2,7 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session 
 from ..models.entidade2 import Location , Gestao , Leitos
 from ..schemas.entidade2 import LocationCreate , GestaoCreate , LeitosCreate
-
+from ..models.entidade1 import UnidadeSaude
 # ==== Location ====
 def get_service_uf(db: Session ,cod_uf: int):
     cod = db.query(Location).filter(Location.cod_uf_municipio == cod_uf).first()

@@ -4,11 +4,12 @@ from ..models.entidade2 import Location , Gestao , Leitos
 from ..schemas.entidade2 import LeitosCreate , LocationCreate , GestaoCreate
 from ..schemas.entidade2 import LeitosResponse ,  GestaoResponse , LocationResponse
 from sqlalchemy.orm import Session
-from ..services.entidade_service import get_service_uf , update_id_lct , delete_service_lct , update_service_gse , delete_service_gse , put_service_leitos ,delete_service_leitos
+from ..services.entidade_service import get_service_uf , update_id_lct , delete_service_lct , update_service_gse , delete_service_gse , put_service_leitos ,delete_service_leitos ,create_location
 
 entidade2 = APIRouter(prefix = "/entidade2" , tags=['entidade2'])
 
 # ===== Location =====
+
 @entidade2.get("/listar-location")
 async def get_location(session: Session = Depends(pegar_sessao) , user = Depends(verificar_token)):
     if not user:
