@@ -77,6 +77,12 @@ python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
         |__ entidade1.py
         |__ entidade2.py
         |__ user.py
+    |__pipeline/
+        |__ __init__.py
+        |__ extract.py
+        |__ load.py
+        |__ pipeline.py
+        |__ transform.py
     |__routes/
         |__ __init__.py
         |__ auth.py
@@ -229,7 +235,18 @@ erDiagram
 -- Usado para facilitar o entender o que está acontecendo no código 
 --Se , uma rota falhar ou se tiver bugs facilita para debung ou uma informção do que está acontecendo na rota
 
-
+## Pipeline de dados 
+estrutura  
+|__pipeline/
+        |__ __init__.py --Contrutor
+        |__ extract.py --extrai os dados no caso deste projeto lê os dados
+        |__ load.py --Atualiza o Banco de dados
+        |__ pipeline.py --Como uns diria esse e o carro chefe é o que orquestra os dados
+        |__ transform.py -- Aplica regra de négocio no caso do meu projeto normaliza colunas remove invalidos separa domínios e etc.
+O pipeline é um processamento que processa limpa lê dados gigantes cria tablas para manter escalabilidade no fastapi
+é diferencia proceesaamento e api deixando assim á api mais robusta é escalavel com o pipeline a API só consulta os dados 
+porquê ele prepara os dados para as consultas de forma dinãmica e organiza cada coisa em seu lugar atualiza o Banco de dados 
+a todo momento Deixando a APi mais rápida e robusta .
 
 
 
