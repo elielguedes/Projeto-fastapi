@@ -6,15 +6,17 @@ from ..schemas.user import UserCreate , UserResponse , MensagemResponse
 from ..schemas.loguin import LoguinResponse , LoguinCreate
 from fastapi.security import OAuth2PasswordRequestForm
 from ..core.config import verificar_token
-from ..services.auth_service import create_user_service
+from ..services.auth_service import AuthService
+from ..repositoryes.auth import UserRepository
 from ..services.loguinservice import autenticar_user , criar_token_service
 
 auth = APIRouter(prefix="/auth" , tags=['auth'])
 
 @auth.post("/create_user", response_model = MensagemResponse)
 async def create_user(data: UserCreate, session: Session = Depends(pegar_sessao)):
-    create_user_service(session , data)
-    return {"Mensagem": f"E-mail {data.email} cadastrado com sucesso !"}
+    repository = UserRepository(session)
+    service = AuthService(repository)
+    return service.create_auth(data)
 
 @auth.post("/Loguin", response_model = LoguinResponse)
 async def loguin(user_schemas: LoguinCreate , session: Session = Depends(pegar_sessao)):
