@@ -4,7 +4,7 @@ from ..models.entidade2 import Location , Gestao , Leitos
 from ..schemas.entidade2 import LeitosCreate , LocationCreate , GestaoCreate
 from ..schemas.entidade2 import LeitosResponse ,  GestaoResponse , LocationResponse
 from sqlalchemy.orm import Session
-from ..services.entidade_service import get_service_uf , update_id_lct , delete_service_lct , update_service_gse , delete_service_gse , put_service_leitos ,delete_service_leitos ,create_location
+from ..services.entidade_service import get_service_uf , update_id_lct , delete_service_lct , update_service_gse , delete_service_gse , put_service_leitos ,delete_service_leitos
 
 entidade2 = APIRouter(prefix = "/entidade2" , tags=['entidade2'])
 
