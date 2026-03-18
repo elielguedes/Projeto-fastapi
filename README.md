@@ -248,5 +248,13 @@ O pipeline é um processamento que processa limpa lê dados gigantes cria tablas
 porquê ele prepara os dados para as consultas de forma dinãmica e organiza cada coisa em seu lugar atualiza o Banco de dados 
 a todo momento Deixando a APi mais rápida e robusta .
 
+## automação do pipeline 
+
+Antes tinha um pipeline que funcionava no terminal mas quebrava quando automatizado acontece po que terminal é diferente e igual automação no terminal
+ativamos o ambiente de desenvolvimento .venv o python vê pandas , sqlalchemy etc na automação .bat /scheduler venv não é ativada o sistema
+usa outro python (global) esse python não tinha as libs para corrigir eu parei de ativar embiente e chamei o python corretamente
+isso me garante mesmo python mesma libs é um padrão profissional dps instalei todas as dependencias do projeto é fechei o ciclo da engenharia de dados 
+🏁 Resumo em uma frase
+👉 o pipeline agora roda com o mesmo Python, as mesmas dependências e o mesmo comportamento, seja manual ou automático.
 
 
