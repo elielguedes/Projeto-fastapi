@@ -1,31 +1,31 @@
 from fastapi import HTTPException
 from ..models.entidade1 import UnidadeSaude
 from sqlalchemy.orm import Session
-from ..schemas.entidade1 import UnidadeCreator
+from ..schemas.entidade1 import UnidadeCreator ,  UnidadeUpdate
+from ..repositoryes.entidade1 import SaudeRepository
 
-def create_unidade(db: Session , unidade: UnidadeCreator):
-    if not unidade.cnes:
-        raise HTTPException(status_code = 400 , detail = "CNES Invalido")
-    db_unidade = UnidadeSaude(cnes = unidade.cnes ,nome = unidade.nome)
-    db.add(db_unidade)
-    db.commit()
-    db.refresh(db_unidade)
-    return db_unidade
+class SaudeService:
+    def __init__(self , repository: SaudeRepository):
+        self.repository = repository
+    
 
-def update_unidade_service(cnes: str , session: Session , dados: UnidadeCreator):
-    unidade = session.query(UnidadeSaude).filter(UnidadeSaude.cnes == cnes).first()
-    if not unidade:
-        raise HTTPException(status_code = 404 , detail = f"Unidade {cnes} não encontrada")
-    unidade.nome = dados.nome
+    def create_unidade(self, unidade: UnidadeCreator):
+        db_unidade = UnidadeSaude(cnes = unidade.cnes ,nome = unidade.nome)
+        if not unidade.cnes:
+            raise HTTPException(status_code = 400 , detail = "CNES Invalido")
+        return self.repository.create(db_unidade)
 
-    session.commit()
-    session.refresh(unidade)
-    return unidade
 
-def delete_unidade_service(cnes: str , db: Session):
-    unidade = db.query(UnidadeSaude).filter(UnidadeSaude.cnes == cnes).first()
-    if not unidade:
-        raise HTTPException(status_code = 400 , detail = "CNES não encontrado")
-    db.delete(unidade)
-    db.commit()
-    return {"mensagem": f"Unidade {cnes} removida com sucesso"}
+    def update_unidade_service(self , cnes: str , dados: UnidadeUpdate):
+        unidade = self.repository.get_by_cnes(cnes)
+        if not unidade:
+            raise HTTPException(status_code = 404 , detail = f"Unidade {cnes} não encontrada")
+        unidade.nome = dados.nome
+        return self.repository.update(unidade)
+
+    def delete_unidade_service(self , cnes: str , db: Session):
+        unidade = self.repository.del_by_cnes(cnes)
+        if not unidade:
+            raise HTTPException(status_code = 400 , detail = "CNES não encontrado")
+        self.repository.delete(unidade)
+        return {"mensagem": f"Unidade {cnes} removida com sucesso"}

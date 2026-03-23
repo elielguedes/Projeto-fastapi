@@ -26,3 +26,8 @@ def verificar_token(token: str = Depends(oauth2_schemas),session: Session = Depe
     if not usuario:
         raise HTTPException(status_code=401, detail="Usuário não encontrado")
     return usuario
+
+def verificar_adm(user: User = Depends(verificar_token)):
+    if not user:
+        raise HTTPException(status_code = 403 , detail = "Usuario não autorizado")
+    return user

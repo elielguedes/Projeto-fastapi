@@ -2,7 +2,7 @@ from fastapi import APIRouter , Depends , HTTPException
 from ..database import pegar_sessao
 from sqlalchemy.orm import Session
 from ..models.user import User
-from ..schemas.user import UserCreate , UserResponse , MensagemResponse
+from ..schemas.user import UserCreate ,  MensagemResponse
 from ..schemas.loguin import LoguinResponse , LoguinCreate
 from fastapi.security import OAuth2PasswordRequestForm
 from ..core.config import verificar_token
@@ -45,4 +45,3 @@ async def loguin_form(dados_formulario: OAuth2PasswordRequestForm = Depends(), s
 async def refresh(usuario: User = Depends(verificar_token)):
     access_token = criar_token_service(usuario.id)
     return {"access_token": access_token, "token_type": "Bearer"}
-

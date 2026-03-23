@@ -29,6 +29,7 @@ class GestaoCreate(GestaoSchemas):
 
 class GestaoResponse(GestaoSchemas):
     id: UUID
+    tipo_gestao: str
 
 # ------ Leitos -------
 class LeitosSchemas(BaseModel):

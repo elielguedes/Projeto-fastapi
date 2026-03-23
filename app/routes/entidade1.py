@@ -6,6 +6,7 @@ from ..database import pegar_sessao
 from ..core.config import verificar_token
 from ..services.entidade_saude import  SaudeService
 from ..repositoryes.entidade1 import SaudeRepository
+from ..pipeline.pipeline import run_pipeline
 
 entidade1 = APIRouter(prefix="/unidade-saude" , tags=['unidade-saude'])
 
