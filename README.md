@@ -83,6 +83,11 @@ python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
         |__ load.py
         |__ pipeline.py
         |__ transform.py
+    |__ repositories/
+        |__ __init__.py
+        |__ auth.py
+        |__ entidade1.py
+        |__ entidade2.py
     |__routes/
         |__ __init__.py
         |__ auth.py
