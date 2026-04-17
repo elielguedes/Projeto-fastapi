@@ -27,10 +27,7 @@ def update_cnes(cnes: str , dados: UnidadeUpdate , db: Session = Depends(pegar_s
     return service.update_unidade_service(cnes , dados)
 
 @entidade1.get("/lista")
-def read_unidade(session: Session = Depends(pegar_sessao) , usuario = Depends(verificar_token)):
-    if not usuario:
-        raise HTTPException(status_code = 400 , detail="Usuario não autenticado")
-    else:
+def read_unidade(session: Session = Depends(pegar_sessao)):
         Unidades = session.query(UnidadeSaude).all()
         return {
             "Unidades": Unidades

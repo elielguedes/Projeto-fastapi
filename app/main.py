@@ -4,6 +4,7 @@ from .routes.entidade1 import entidade1
 from .routes.entidade2 import entidade2
 from .core.logs import setup_loguin
 from .routes.pipeline import router
+from fastapi.middleware.cors import CORSMiddleware
 import logging
 
 setup_loguin()
@@ -11,6 +12,18 @@ setup_loguin()
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(auth)
 app.include_router(entidade1)
